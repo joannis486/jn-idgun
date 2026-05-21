@@ -12,7 +12,7 @@ local prevWeapon      = nil
 local hadScannerWeapon = false
 
 local function equipScanner()
-    local ped = cache.ped or PlayerPedId()
+    local ped = PlayerPedId()
     prevWeapon        = GetSelectedPedWeapon(ped)
     hadScannerWeapon  = HasPedGotWeapon(ped, SCANNER_WEAPON, false)
     if not hadScannerWeapon then
@@ -22,7 +22,7 @@ local function equipScanner()
 end
 
 local function unequipScanner()
-    local ped = cache.ped or PlayerPedId()
+    local ped = PlayerPedId()
     if not hadScannerWeapon then
         RemoveWeaponFromPed(ped, SCANNER_WEAPON)
     end
@@ -73,7 +73,7 @@ end
 -- ─────────────────────────────────────────────
 local function collectData(entity)
     local coords   = GetEntityCoords(entity)
-    local myCoords = GetEntityCoords(cache.ped or PlayerPedId())
+    local myCoords = GetEntityCoords(PlayerPedId())
     local dist     = #(coords - myCoords)
 
     if dist > Config.MaxScanDistance then return nil, 'range' end
