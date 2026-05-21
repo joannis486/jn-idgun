@@ -90,7 +90,7 @@ local function collectData(entity)
         rawCoords = { x = coords.x, y = coords.y, z = coords.z },
         heading   = ('%.2f°'):format(heading),
         distance  = ('%.1f m'):format(dist),
-        timestamp = os.date('%H:%M:%S')
+        timestamp = ('%02d:%02d:%02d'):format(GetClockHours(), GetClockMinutes(), GetClockSeconds())
     }
 
     -- Ped / Player shared fields
