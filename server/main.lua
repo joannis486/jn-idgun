@@ -115,6 +115,39 @@ RegisterNetEvent('jn-idgun:server:logCopy', function(data)
 end)
 
 -- ─────────────────────────────────────────────
+--  Useable Item (QBox / QBCore / ESX)
+-- ─────────────────────────────────────────────
+local function toggleForPlayer(src)
+    if activeScanners[src] then
+        activeScanners[src] = nil
+    else
+        activeScanners[src] = true
+    end
+    TriggerClientEvent('jn-idgun:client:toggleAllowed', src)
+end
+
+CreateThread(function()
+    Wait(700) -- ensure Bridge is fully initialized
+
+    if Bridge.Type == 'qbox' and GetResourceState('ox_inventory') ~= 'missing' then
+        exports.ox_inventory:registerHook('useItem', function(payload)
+            if payload.item.name ~= 'idgun' then return end
+            toggleForPlayer(payload.source)
+        end)
+
+    elseif Bridge.Type == 'qbcore' and Bridge.Core then
+        Bridge.Core.Functions.CreateUseableItem('idgun', function(src)
+            toggleForPlayer(src)
+        end)
+
+    elseif Bridge.Type == 'esx' and Bridge.Core then
+        Bridge.Core.RegisterUsableItem('idgun', function(src)
+            toggleForPlayer(src)
+        end)
+    end
+end)
+
+-- ─────────────────────────────────────────────
 --  Cleanup on player drop
 -- ─────────────────────────────────────────────
 AddEventHandler('playerDropped', function()
