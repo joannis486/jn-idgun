@@ -1,0 +1,34 @@
+{
+    "toggle_on":          "ID Scanner activated",
+    "toggle_off":         "ID Scanner deactivated",
+    "no_permission":      "You don't have permission to use the ID Scanner",
+    "consent_notify":     "You are being scanned by an officer",
+    "copy_success":       "Coords printed to F8 console",
+    "no_entity":          "No entity in range",
+    "out_of_range":       "Entity out of range (>50m)",
+
+    "entity_ped":         "PED",
+    "entity_player":      "PLAYER",
+    "entity_vehicle":     "VEHICLE",
+    "entity_object":      "OBJECT",
+
+    "label_model":        "Model",
+    "label_hash":         "Hash",
+    "label_coords":       "Coords",
+    "label_heading":      "Heading",
+    "label_distance":     "Distance",
+    "label_health":       "Health",
+    "label_armor":        "Armor",
+    "label_plate":        "Plate",
+    "label_fuel":         "Fuel",
+    "label_driver":       "Driver",
+    "label_server_id":    "Server ID",
+    "label_player_name":  "Name",
+    "label_ping":         "Ping",
+    "label_job":          "Job",
+    "label_wanted":       "Wanted",
+
+    "audit_scan":         "[jn-idgun] AUDIT | %s (ID: %d) scanned %s [%s]",
+    "audit_player_target":"[jn-idgun]         → Target: %s (ID: %d)",
+    "audit_copy":         "[jn-idgun] AUDIT | %s (ID: %d) copied coords: %s"
+}

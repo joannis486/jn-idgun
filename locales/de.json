@@ -1,0 +1,34 @@
+{
+    "toggle_on":          "ID Scanner aktiviert",
+    "toggle_off":         "ID Scanner deaktiviert",
+    "no_permission":      "Du hast keine Berechtigung für den ID Scanner",
+    "consent_notify":     "Du wirst gerade von einem Beamten gescannt",
+    "copy_success":       "Koordinaten in F8-Konsole gedruckt",
+    "no_entity":          "Keine Entität in Reichweite",
+    "out_of_range":       "Entität zu weit entfernt (>50m)",
+
+    "entity_ped":         "PED",
+    "entity_player":      "SPIELER",
+    "entity_vehicle":     "FAHRZEUG",
+    "entity_object":      "OBJEKT",
+
+    "label_model":        "Modell",
+    "label_hash":         "Hash",
+    "label_coords":       "Koordinaten",
+    "label_heading":      "Ausrichtung",
+    "label_distance":     "Entfernung",
+    "label_health":       "Leben",
+    "label_armor":        "Rüstung",
+    "label_plate":        "Kennzeichen",
+    "label_fuel":         "Kraftstoff",
+    "label_driver":       "Fahrer",
+    "label_server_id":    "Server ID",
+    "label_player_name":  "Name",
+    "label_ping":         "Ping",
+    "label_job":          "Job",
+    "label_wanted":       "Stecklevel",
+
+    "audit_scan":         "[jn-idgun] AUDIT | %s (ID: %d) hat %s [%s] gescannt",
+    "audit_player_target":"[jn-idgun]         → Ziel: %s (ID: %d)",
+    "audit_copy":         "[jn-idgun] AUDIT | %s (ID: %d) hat Koordinaten kopiert: %s"
+}

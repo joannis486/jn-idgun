@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jn-idgun</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── Main Scanner Panel ─────────────────────── -->
+<div id="idgun-panel">
+    <div class="panel-header">
+        <div class="header-left">
+            <span id="entity-badge" class="entity-badge">—</span>
+        </div>
+        <div class="header-center">
+            <span class="brand">jn-idgun</span>
+        </div>
+        <div class="header-right">
+            <span id="scan-dot" class="scan-dot idle"></span>
+        </div>
+    </div>
+
+    <!-- Entity data rows -->
+    <div class="data-section" id="data-section">
+        <div class="no-entity-msg" id="no-entity-msg">
+            <span class="no-entity-icon">⬤</span>
+            Aim at an entity
+        </div>
+
+        <!-- Base rows (always shown when entity found) -->
+        <div id="rows-base" class="rows-group hidden">
+            <div class="data-row">
+                <span class="lbl" data-key="label_model">Model</span>
+                <span class="val" id="val-model">—</span>
+            </div>
+            <div class="data-row">
+                <span class="lbl" data-key="label_hash">Hash</span>
+                <span class="val mono" id="val-hash">—</span>
+            </div>
+            <div class="data-row coords-row">
+                <span class="lbl" data-key="label_coords">Coords</span>
+                <span class="val mono small" id="val-coords">—</span>
+                <button class="copy-btn" id="copy-btn" title="Copy to console">⎘</button>
+            </div>
+            <div class="data-row">
+                <span class="lbl" data-key="label_heading">Heading</span>
+                <span class="val mono" id="val-heading">—</span>
+            </div>
+            <div class="data-row">
+                <span class="lbl" data-key="label_distance">Distance</span>
+                <span class="val" id="val-distance">—</span>
+            </div>
+        </div>
+
+        <div class="divider hidden" id="div-health"></div>
+
+        <!-- Health / Armor (ped + player) -->
+        <div id="rows-health" class="rows-group hidden">
+            <div class="data-row" id="row-health">
+                <span class="lbl" data-key="label_health">Health</span>
+                <div class="bar-container">
+                    <div class="bar health-bar" id="bar-health"></div>
+                    <span class="val bar-val" id="val-health">—</span>
+                </div>
+            </div>
+            <div class="data-row" id="row-armor">
+                <span class="lbl" data-key="label_armor">Armor</span>
+                <div class="bar-container">
+                    <div class="bar armor-bar" id="bar-armor"></div>
+                    <span class="val bar-val" id="val-armor">—</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider hidden" id="div-player"></div>
+
+        <!-- Player-only rows -->
+        <div id="rows-player" class="rows-group hidden">
+            <div class="data-row">
+                <span class="lbl" data-key="label_server_id">Server ID</span>
+                <span class="val accent" id="val-serverid">—</span>
+            </div>
+            <div class="data-row">
+                <span class="lbl" data-key="label_player_name">Name</span>
+                <span class="val" id="val-playername">—</span>
+            </div>
+            <div class="data-row" id="row-job">
+                <span class="lbl" data-key="label_job">Job</span>
+                <span class="val" id="val-job">—</span>
+            </div>
+            <div class="data-row" id="row-wanted">
+                <span class="lbl" data-key="label_wanted">Wanted</span>
+                <span class="val" id="val-wanted">—</span>
+            </div>
+            <div class="data-row" id="row-ping">
+                <span class="lbl" data-key="label_ping">Ping</span>
+                <span class="val" id="val-ping">—</span>
+            </div>
+        </div>
+
+        <div class="divider hidden" id="div-vehicle"></div>
+
+        <!-- Vehicle-only rows -->
+        <div id="rows-vehicle" class="rows-group hidden">
+            <div class="data-row">
+                <span class="lbl" data-key="label_plate">Plate</span>
+                <span class="val mono" id="val-plate">—</span>
+            </div>
+            <div class="data-row">
+                <span class="lbl" data-key="label_fuel">Fuel</span>
+                <div class="bar-container">
+                    <div class="bar fuel-bar" id="bar-fuel"></div>
+                    <span class="val bar-val" id="val-fuel">—</span>
+                </div>
+            </div>
+            <div class="data-row" id="row-driver">
+                <span class="lbl" data-key="label_driver">Driver</span>
+                <span class="val" id="val-driver">—</span>
+            </div>
+        </div>
+
+        <!-- Out of range message -->
+        <div class="out-of-range-msg hidden" id="out-of-range-msg">
+            <span class="warn-icon">⚠</span> Out of range
+        </div>
+    </div>
+
+    <!-- History section -->
+    <div class="history-section hidden" id="history-section">
+        <div class="divider"></div>
+        <div class="history-header">
+            <span>HISTORY</span>
+            <span id="history-count" class="history-count">0</span>
+        </div>
+        <div id="history-list" class="history-list"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="panel-footer">
+        <span class="key-hint"><kbd id="key-toggle">F6</kbd> Toggle</span>
+        <span class="key-hint"><kbd>C</kbd> Copy</span>
+        <span class="key-hint"><kbd>H</kbd> History</span>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
