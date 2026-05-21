@@ -6,6 +6,32 @@ local scanHistory  = {}
 local lastScanData = nil
 local historyOpen  = false
 
+-- Weapon management
+local SCANNER_WEAPON  = GetHashKey('WEAPON_FLASHLIGHT')
+local prevWeapon      = nil
+local hadScannerWeapon = false
+
+local function equipScanner()
+    local ped = cache.ped or PlayerPedId()
+    prevWeapon        = GetSelectedPedWeapon(ped)
+    hadScannerWeapon  = HasPedGotWeapon(ped, SCANNER_WEAPON, false)
+    if not hadScannerWeapon then
+        GiveWeaponToPed(ped, SCANNER_WEAPON, 0, false, true)
+    end
+    SetCurrentPedWeapon(ped, SCANNER_WEAPON, true)
+end
+
+local function unequipScanner()
+    local ped = cache.ped or PlayerPedId()
+    if not hadScannerWeapon then
+        RemoveWeaponFromPed(ped, SCANNER_WEAPON)
+    end
+    if prevWeapon then
+        SetCurrentPedWeapon(ped, prevWeapon, true)
+        prevWeapon = nil
+    end
+end
+
 -- Load hash lookup table
 local Hashes = {}
 do
@@ -192,9 +218,11 @@ RegisterNetEvent('jn-idgun:client:toggleAllowed', function()
     isActive = not isActive
 
     if isActive then
+        equipScanner()
         SendNUIMessage({ action = 'show' })
         Bridge.Notify(T('toggle_on'), 'success', 2000)
     else
+        unequipScanner()
         SendNUIMessage({ action = 'hide' })
         Bridge.Notify(T('toggle_off'), 'inform', 2000)
         lastScanData      = nil
