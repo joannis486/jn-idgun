@@ -37,7 +37,7 @@ function Bridge.Notify(msg, notifType, duration)
     notifType = notifType or 'inform'
     duration  = duration  or 3000
 
-    if Bridge.HasOxLib then
+    if Bridge.HasOxLib and lib then
         lib.notify({ description = msg, type = notifType, duration = duration })
         return
     end
