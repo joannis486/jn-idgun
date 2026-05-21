@@ -82,6 +82,10 @@ local function collectData(entity)
     local model    = GetEntityModel(entity)
     local eType    = getEntityTypeStr(entity)
 
+    -- Screen position for target dot (aim at entity center)
+    local dotZ = coords.z + (eType == 'ped' or eType == 'player' and 0.9 or 0.5)
+    local onScreen, sx, sy = GetScreenCoordFromWorldCoord(coords.x, coords.y, dotZ)
+
     local data = {
         type      = eType,
         model     = resolveHash(model),
@@ -90,7 +94,9 @@ local function collectData(entity)
         rawCoords = { x = coords.x, y = coords.y, z = coords.z },
         heading   = ('%.2f°'):format(heading),
         distance  = ('%.1f m'):format(dist),
-        timestamp = ('%02d:%02d:%02d'):format(GetClockHours(), GetClockMinutes(), GetClockSeconds())
+        timestamp = ('%02d:%02d:%02d'):format(GetClockHours(), GetClockMinutes(), GetClockSeconds()),
+        dotX      = onScreen and sx or nil,
+        dotY      = onScreen and sy or nil,
     }
 
     -- Ped / Player shared fields
@@ -169,7 +175,12 @@ CreateThread(function()
             local entity = getAimedEntity()
 
             if not entity or not DoesEntityExist(entity) then
-                SendNUIMessage({ action = 'idle' })
+                -- Keep last scan visible (frozen), hide target dot
+                if lastScanData then
+                    SendNUIMessage({ action = 'frozen' })
+                else
+                    SendNUIMessage({ action = 'idle' })
+                end
                 playerInfoPending = false
                 lastPlayerTarget  = -1
             else
@@ -272,6 +283,7 @@ RegisterCommand('idgun_copy', function()
     local c = lastScanData.rawCoords
     local str = ('%.4f, %.4f, %.4f'):format(c.x, c.y, c.z)
 
+    SetClipboard(str)
     print(('\n[jn-idgun] Coords: %s | Model: %s | Type: %s\n'):format(str, lastScanData.model, lastScanData.type))
 
     pushHistory(lastScanData)

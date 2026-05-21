@@ -379,6 +379,69 @@ kbd {
 /* ── Utilities ──────────────────────────────── */
 .hidden { display: none !important; }
 
+/* ── Frozen state (last scan, not aiming) ───── */
+.scan-dot.frozen {
+    background: var(--text-2);
+    box-shadow: none;
+    animation: none;
+}
+
+#idgun-panel.frozen-mode .data-section {
+    opacity: 0.75;
+}
+
+#idgun-panel.frozen-mode .panel-header::after {
+    content: 'LAST SCAN';
+    font-size: 8px;
+    color: var(--text-2);
+    letter-spacing: 1px;
+    margin-left: auto;
+    padding-right: 2px;
+}
+
+/* ── Target Dot ─────────────────────────────── */
+#target-dot {
+    position: fixed;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+#target-dot.visible {
+    display: block;
+}
+
+.dot-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--cyan);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    animation: dotRingPulse 1.6s ease-in-out infinite;
+}
+
+.dot-core {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 6px var(--cyan), 0 0 12px rgba(0, 212, 255, 0.4);
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 6px; /* center offset for ring */
+}
+
+@keyframes dotRingPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 0.5; }
+    50%       { transform: translate(-50%, -50%) scale(1.4); opacity: 0.2; }
+}
+
 /* ── Copy flash animation ───────────────────── */
 @keyframes copyFlash {
     0%   { background: var(--cyan-dim); border-color: var(--cyan); }

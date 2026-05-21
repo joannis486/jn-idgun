@@ -20,9 +20,22 @@ const historySection = document.getElementById('history-section');
 const historyList    = document.getElementById('history-list');
 const historyCount   = document.getElementById('history-count');
 const copyBtn        = document.getElementById('copy-btn');
+const targetDot      = document.getElementById('target-dot');
 
 let currentType  = null;
 let panelVisible = false;
+
+// ── Target Dot ────────────────────────────────────
+
+function showDot(x, y) {
+    targetDot.style.left = (x * 100) + 'vw';
+    targetDot.style.top  = (y * 100) + 'vh';
+    targetDot.classList.add('visible');
+}
+
+function hideDot() {
+    targetDot.classList.remove('visible');
+}
 
 // ── Helpers ───────────────────────────────────────
 
@@ -102,7 +115,15 @@ function resetToIdle() {
     hide(divVehicle);
     hide(outOfRangeMsg);
     show(noEntityMsg);
+    panel.classList.remove('frozen-mode');
+    hideDot();
     currentType = null;
+}
+
+function freezePanel() {
+    scanDot.className = 'scan-dot frozen';
+    panel.classList.add('frozen-mode');
+    hideDot();
 }
 
 // ── Update Panel ──────────────────────────────────
@@ -177,6 +198,14 @@ function updatePanel(data) {
     }
 
     currentType = data.type;
+    panel.classList.remove('frozen-mode');
+
+    // Show / position target dot
+    if (data.dotX !== undefined && data.dotY !== undefined) {
+        showDot(data.dotX, data.dotY);
+    } else {
+        hideDot();
+    }
 }
 
 function updateExtra(job) {
@@ -259,6 +288,11 @@ window.addEventListener('message', (event) => {
             if (!panelVisible) break;
             updatePanel(msg.data);
             if (msg.history) renderHistory(msg.history);
+            break;
+
+        case 'frozen':
+            if (!panelVisible) break;
+            freezePanel();
             break;
 
         case 'updateExtra':
