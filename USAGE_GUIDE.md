@@ -1,20 +1,20 @@
-# jn-idgun — Anleitung
+# jn-idgun — Usage Guide
 
-## Was macht das Script?
+## What does it do?
 
-Du richtest eine Waffe auf irgendetwas und siehst sofort alle technischen Infos: Koordinaten, Model-Name, Hash, Heading, Entfernung. Bei Spielern auch Server-ID, Name, Job, Wanted-Level, Health, Armor und Ping. Bei Fahrzeugen: Kennzeichen, Tankstand, Fahrer.
+Aim any weapon at an entity and instantly see all technical info: coordinates, model name, hash, heading, and distance. For players you also get server ID, name, job, wanted level, health, armor, and ping. For vehicles: plate, fuel level, and driver.
 
-Das Panel erscheint links unten als Dark+Cyan-Overlay — kein Menü, kein Mausfokus, einfach drauf und scannen.
+The panel slides in from the bottom-left as a Dark+Cyan overlay — no menu, no mouse focus required, just aim and scan.
 
 ---
 
-## Aktivierung
+## Activation
 
-### Option 1 — Keybind (Standard)
+### Option 1 — Keybind (default)
 
-Standardmäßig ist **F6** der Toggle-Key. Drücken → Panel erscheint. Nochmal drücken → Panel verschwindet.
+**F6** toggles the scanner. Press once to open, press again to close.
 
-Der Key ist rebindable: GTA V Einstellungen → Tastatur → "jn-idgun: Toggle Scanner"
+Rebindable in GTA V settings → Key Bindings → search "jn-idgun: Toggle Scanner".
 
 ### Option 2 — Command
 
@@ -24,10 +24,9 @@ Der Key ist rebindable: GTA V Einstellungen → Tastatur → "jn-idgun: Toggle S
 
 ### Option 3 — Item
 
-Wenn dem Spieler das Item `idgun` gegeben wurde, einfach im Inventar benutzen. Funktioniert wie ein Toggle.
+If the player has been given the `idgun` item, simply use it from the inventory. Works as a toggle.
 
-```lua
--- Admin: Item via Konsole geben
+```
 /giveitem [playerid] idgun 1
 ```
 
@@ -35,53 +34,53 @@ Wenn dem Spieler das Item `idgun` gegeben wurde, einfach im Inventar benutzen. F
 
 ## Controls
 
-| Taste | Aktion |
+| Key | Action |
 |---|---|
-| **F6** | Scanner ein/ausschalten |
-| **C** | Letzte Koordinaten in F8-Console drucken |
-| **H** | History-Panel ein/ausblenden (letzte 10 Scans) |
+| **F6** | Toggle scanner on / off |
+| **C** | Print last scanned coords to F8 console |
+| **H** | Toggle history panel (last 10 scans) |
 
-Alle Keys sind rebindable unter GTA V → Einstellungen → Tastatur & Maus.
+All keys are rebindable via GTA V → Settings → Key Bindings.
 
 ---
 
-## Was wird angezeigt?
+## What gets displayed?
 
 ### Ped (NPC)
-- Model-Name
+- Model name
 - Hash
-- Koordinaten
+- Coordinates
 - Heading
-- Entfernung
+- Distance
 - Health, Armor
 
-### Spieler
-Alles was beim Ped steht, plus:
-- Server-ID
-- Spielername
-- Job (aus dem Framework)
-- Wanted-Level (★★☆☆☆)
+### Player
+Everything from Ped, plus:
+- Server ID
+- Player name
+- Job (pulled from the framework)
+- Wanted level (★★☆☆☆)
 - Ping
 
-### Fahrzeug
-- Model-Name
-- Kennzeichen
-- Tankstand
-- Fahrer (Name + Server-ID)
-- Koordinaten, Heading, Entfernung
+### Vehicle
+- Model name
+- Plate
+- Fuel level
+- Driver (name + server ID)
+- Coordinates, heading, distance
 
-### Objekt / Prop
-- Model-Name
+### Object / Prop
+- Model name
 - Hash
-- Koordinaten
+- Coordinates
 - Heading
-- Entfernung
+- Distance
 
 ---
 
-## Koordinaten kopieren
+## Copying Coords
 
-**C** drücken während der Scanner aktiv ist und eine Entität angezielt wird. Die Koordinaten werden in die F8-Konsole gedruckt:
+Press **C** while the scanner is active and an entity is in sight. The coords get printed to the F8 console:
 
 ```
 [jn-idgun] Coords: 123.4567, -456.7890, 30.1234 | Model: a_m_y_hipster_01 | Type: ped
@@ -89,72 +88,72 @@ Alles was beim Ped steht, plus:
 
 ---
 
-## History
+## History Panel
 
-**H** drücken → ein kleines Panel zeigt die letzten 10 Scans mit Typ, Model und Uhrzeit. Nützlich wenn du mehrere Entities schnell hintereinander gecheckt hast.
+Press **H** to open a small list of your last 10 scans, showing type, model name and timestamp. Useful when you've quickly scanned multiple entities and want to go back.
 
 ---
 
-## Berechtigungen (server.cfg)
+## Permissions (server.cfg)
 
 ```cfg
-# Gruppen, die den Scanner nutzen dürfen
+# Groups allowed to use the scanner
 add_ace group.admin      command.idgun allow
 add_ace group.moderator  command.idgun allow
 add_ace group.police     command.idgun allow
 
-# Einzelner Spieler per Identifier
+# Single player by identifier
 add_principal identifier.steam:110000112345678 group.admin
 ```
 
-Alternativ: `Config.UseJobWhitelist = true` in `config.lua` — dann können nur bestimmte Jobs den Scanner nutzen, ohne Ace-Permission.
+Alternatively, enable `Config.UseJobWhitelist = true` in `config.lua` — then only specific jobs can use the scanner, without needing an ace permission.
 
 ---
 
-## config.lua — die wichtigsten Settings
+## config.lua — Key Settings
 
 ```lua
--- Jeder darf den Scanner nutzen (gut zum Testen, nicht für Prod!)
+-- Everyone can use the scanner (good for testing, not for production)
 Config.RequirePermission = false
 
--- Nur bestimmte Jobs können den Scanner nutzen
+-- Only allow specific jobs
 Config.UseJobWhitelist = true
 Config.AllowedJobs = { 'police', 'sheriff', 'admin' }
 
--- Consent Mode: Zielspieler bekommt Notification wenn er gescannt wird
+-- Consent mode: notify the target player when they are being scanned
 Config.ConsentMode = true
 
--- Audit Log in der Server-Console ausschalten
+-- Disable audit logging to server console
 Config.AuditLog = false
 
--- Maximale Scan-Reichweite in Metern
+-- Maximum scan distance in meters
 Config.MaxScanDistance = 100.0
 
--- Deutsche Sprache
-Config.Locale = 'de'
+-- Language
+Config.Locale = 'en'  -- or 'de'
 ```
 
 ---
 
-## Item vergeben (QBCore / QBox)
+## Giving the Item (QBCore / QBox / ESX)
 
 ```lua
--- Via Server-Konsole oder Admin-Script:
+-- Via server console or admin script:
 /giveitem 1 idgun 1
 
--- Via Lua (z.B. in einem anderen Script):
-exports['ox_inventory']:AddItem(source, 'idgun', 1)         -- QBox
-Player.Functions.AddItem('idgun', 1)                         -- QBCore
-xPlayer.addInventoryItem('idgun', 1)                         -- ESX
+-- Via Lua in another script:
+exports['ox_inventory']:AddItem(source, 'idgun', 1)  -- QBox
+Player.Functions.AddItem('idgun', 1)                  -- QBCore
+xPlayer.addInventoryItem('idgun', 1)                  -- ESX
 ```
 
-Das Item ist als `unique = true` konfiguriert — ein Spieler kann es nur einmal im Inventar haben.
+The item is configured as `unique = true` — a player can only carry one at a time.
 
 ---
 
 ## Audit Log
 
-Wenn `Config.AuditLog = true` (Standard), wird jeder Scan in der Server-Console geloggt:
+When `Config.AuditLog = true` (default), every scan is logged to the server console:
 
 ```
 [jn-idgun] AUDIT | Janni (ID: 1) scanned player [John_Doe]
@@ -163,12 +162,12 @@ Wenn `Config.AuditLog = true` (Standard), wird jeder Scan in der Server-Console 
 
 ---
 
-## Fehlerbehebung
+## Troubleshooting
 
-**Scanner lässt sich nicht togglen:** Prüfe ob die Ace-Permission gesetzt ist oder `Config.RequirePermission = false` in config.lua.
+**Scanner won't toggle:** Check that the ace permission is set, or set `Config.RequirePermission = false` in config.lua.
 
-**Job wird nicht angezeigt:** Das Script holt den Job via Server-Callback. Kurz warten nach dem ersten Scan — er erscheint nach ~0.5s.
+**Job not showing up:** The job is fetched via a server callback. Wait ~0.5s after the first scan on a player — it will appear shortly after.
 
-**Item funktioniert nicht:** Stelle sicher dass `qb-core` neugestartet wurde nachdem das Item zu items.lua hinzugefügt wurde, oder nutze einfach den Keybind/Command.
+**Item doesn't work:** Make sure `qb-core` was restarted after adding the item to items.lua. Alternatively just use the keybind or command.
 
-**NUI sichtbar aber kein Panel:** F6 nochmal drücken (Toggle).
+**Panel not visible:** Press F6 again to toggle it back on.
